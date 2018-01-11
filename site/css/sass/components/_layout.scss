@@ -1,0 +1,41 @@
+/* Document: layout.scss
+   ========================================================================== */
+
+%container {
+  margin-right: auto;
+  margin-left: auto;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.l-container {
+  @extend %container;
+  &--fluid {
+    @extend %container;
+  }
+}
+
+@include media-screen($breakpoint-xs-up) {
+  .l-container {
+    max-width: calc-rem($container-xs, $base-value);
+  }
+}
+
+@include media-screen($breakpoint-sm-up) {
+  .l-container {
+    max-width: calc-rem($container-sm, $base-value);
+  }
+}
+
+@include media-screen($breakpoint-md-up) {
+  .l-container {
+    max-width: calc-rem($container-md, $base-value);
+  }
+}
+
+@include media-screen($breakpoint-lg-up) {
+  .l-container {
+    max-width: calc-rem($container-lg, $base-value);
+  }
+}

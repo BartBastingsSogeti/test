@@ -1,0 +1,61 @@
+/* Document: variables.scss
+   ========================================================================== */
+
+// HTML default font-size
+$base-value: 16;
+
+// gutter width in px
+$base-gutter: 30;
+
+// viewport widths in px
+$base-xs: 600;
+$base-sm: 900;
+$base-md: 1200;
+$base-lg: 1800;
+
+// container widths in px
+$container-xs: 540;
+$container-sm: 840;
+$container-md: 1140;
+$container-lg: 1440;
+
+// zindex
+$zindex-dropdown: 1000;
+$zindex-fixed: 1030;
+$zindex-sticky: 1030;
+$zindex-modal: 1040;
+
+// Small devices 600px
+$breakpoint-min-xs: calc-rem($base-xs, $base-value);
+// Small devices 599px
+$breakpoint-max-xs: calc-rem(($base-xs - 1), $base-value);
+// Medium devices 900px
+$breakpoint-min-sm: calc-rem($base-sm, $base-value);
+// Medium devices 899px
+$breakpoint-max-sm: calc-rem(($base-sm - 1), $base-value);
+// Large devices 1200px
+$breakpoint-min-md: calc-rem($base-md, $base-value);
+// large devices 1199px
+$breakpoint-max-md: calc-rem(($base-md - 1) , $base-value);
+// Extra large devices 1800px
+$breakpoint-min-lg: calc-rem($base-lg, $base-value);
+// Extra large devices 1799px
+$breakpoint-max-lg: calc-rem(($base-lg - 1), $base-value);
+
+// breakpoint media mobile-first
+$breakpoint-xs-up: "only screen and (min-width: #{$breakpoint-min-xs})";
+$breakpoint-sm-up: "only screen and (min-width: #{$breakpoint-min-sm})";
+$breakpoint-md-up: "only screen and (min-width: #{$breakpoint-min-md})";
+$breakpoint-lg-up: "only screen and (min-width: #{$breakpoint-min-lg})";
+
+// breakpoint
+$breakpoint-xs-down: "only screen and (max-width: #{$breakpoint-max-xs})";
+$breakpoint-sm-down: "only screen and (max-width: #{$breakpoint-max-sm})";
+$breakpoint-md-down: "only screen and (max-width: #{$breakpoint-max-md})";
+$breakpoint-lg-down: "only screen and (max-width: #{$breakpoint-max-lg})";
+
+// breakpoint
+$breakpoint-xs-only: "#{$breakpoint-xs-up} and (max-width: #{$breakpoint-max-sm})";
+$breakpoint-sm-only: "#{$breakpoint-sm-up} and (max-width: #{$breakpoint-max-md})";
+$breakpoint-md-only: "#{$breakpoint-md-up} and (max-width: #{$breakpoint-max-lg})";
+$breakpoint-lg-only: $breakpoint-lg-up;

@@ -1,0 +1,19 @@
+/* Document: mixins.scss
+   ========================================================================== */
+
+/// mixin media-screen
+/// Helper mixin for to generate a media query.
+///
+/// @param {string} $breakpoint - the query
+///
+/// @return {object} value in rem
+///
+/// @example scss - Calculate rem `.foo
+///  .foo {
+///    font-size: calc-rem(24, 16);
+///  }
+@mixin media-screen($breakpoint) {
+ @media #{$breakpoint} {
+    @content;
+  }
+}

@@ -1,0 +1,19 @@
+/* Document: functions.scss
+   ========================================================================== */
+
+/// function calc-rem
+/// Helper function for to calculate pixel to rem.
+///
+/// @param {int} $size - the pize size
+/// @param {int} $base - the pixel root default value
+///
+/// @return {string} value in rem
+///
+/// @example scss - Calculate rem `.foo
+///  .foo {
+///    font-size: calc-rem(24, 16);
+///  }
+@function calc-rem($size, $base) {
+  $remSize: $size / $base;
+  @return #{$remSize}rem;
+}
