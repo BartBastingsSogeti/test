@@ -13,6 +13,7 @@ const concat = require('gulp-concat');
 const rename = require('gulp-rename');
 const uglify = require('gulp-uglify');
 const log = require('gulplog');
+const jshint = require('gulp-jshint');
 
 var pathsBase,
   pathsCss,
@@ -88,6 +89,7 @@ gulp.task('css', function () {
     .pipe(minify())
     .pipe(rename('style.min.css'))
     .pipe(gulp.dest(pathsCss.dist))
+    .pipe(plugins.livereload());
 });
 
 gulp.task('css:watch', function () {
@@ -106,7 +108,7 @@ gulp.task('sass:watch', function () {
 });
 
 gulp.task('sass:lint', function () {
-  return gulp.src(pathsSass.components + '*.scss')
+  return gulp.src([pathsSass.components + '*.scss', files.sass])
     .pipe(sassLint())
     .pipe(sassLint.format())
     .pipe(sassLint.failOnError());
@@ -114,12 +116,17 @@ gulp.task('sass:lint', function () {
 
 gulp.task('js', function () {
   var bundler = browserify(configBrowserify.config);
-
   bundle(bundler);
 });
 
 gulp.task('js:watch', function () {
   gulp.watch([pathsJs.modules + '*.js', files.js], ['js']);
 });
+
+gulp.task('js:hint', function() {
+  return gulp.src([pathsJs.modules + '*.js', files.js])
+    .pipe(jshint())
+    .pipe(jshint.reporter('default', { verbose: true }));
+})
 
 gulp.task('watch', ['sass:watch', 'css:watch', 'js:watch']);
