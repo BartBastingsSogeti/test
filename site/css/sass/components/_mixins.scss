@@ -13,7 +13,7 @@
 ///    font-size: calc-rem(24, 16);
 ///  }
 @mixin media-screen($breakpoint) {
- @media #{$breakpoint} {
+  @media #{$breakpoint} {
     @content;
   }
 }

@@ -1,64 +1,125 @@
 'use strict';
 
-var basePaths,
-  cssPaths,
-  files,
-  gulp,
-  sass,
-  merge,
-  concat,
-  rename,
-  merge,
-  minify;
+const browserify = require('browserify');
+const gulp = require('gulp');
+const source = require('vinyl-source-stream');
+const buffer = require('vinyl-buffer');
+const merge = require('merge-stream');
+const sass = require('gulp-sass');
+const sassLint = require('gulp-sass-lint');
+const minify = require('gulp-minify-css');
+const sourcemaps = require('gulp-sourcemaps');
+const concat = require('gulp-concat');
+const rename = require('gulp-rename');
+const uglify = require('gulp-uglify');
+const log = require('gulplog');
 
-basePaths = {
+var pathsBase,
+  pathsCss,
+  pathsSass,
+  pathsJs,
+  files,
+  configBrowserify;
+
+pathsBase = {
   css : 'site/css/',
-  js : 'site/js/',
+  js : 'site/js/'
 };
 
-cssPaths = {
-  sass : basePaths.css + 'sass/',
-  dev : basePaths.css + 'dev/',
-  dist : basePaths.css + 'dist/'
+pathsCss = {
+  sass : pathsBase.css + 'sass/',
+  dev : pathsBase.css + 'dev/',
+  dist : pathsBase.css + 'dist/'
+};
+
+pathsJs = {
+  modules : pathsBase.js + 'modules/',
+  dev : pathsBase.js + 'dev/',
+  dist : pathsBase.js + 'dist/'
+}
+
+pathsSass = {
+  components : pathsCss.sass + 'components/'
 };
 
 files = {
-  sass : cssPaths.sass + 'sass.scss'
+  sass : pathsCss.sass + 'sass.scss',
+  css : pathsBase.css + 'sass.css',
+  normalize : pathsBase.css + 'normalize.css',
+  js : pathsBase.js + 'app.js'
 };
 
-gulp = require('gulp');
-sass = require('gulp-sass');
-concat = require('gulp-concat');
-rename = require('gulp-rename');
-merge = require('merge-stream');
-minify = require('gulp-minify-css');
+configBrowserify = {
+  src: files.js,
+  outputDir : pathsJs.dist,
+  mapDir : '/maps/',
+  outputFile: 'script.min.js',
+  config : {
+    entries: files.js,
+    debug : true
+  }
+}
+
+/**
+ * bundle
+ * This method makes it easy to use common bundling options in different tasks
+ * @param {browserify}
+ */
+function bundle(bundler) {
+  bundler.bundle()
+    .pipe(source(configBrowserify.src))
+    .pipe(buffer())
+    .pipe(rename(configBrowserify.outputFile))
+    .pipe(uglify())
+    .pipe(sourcemaps.init({loadMaps : true}))
+    .on('error', log.error)
+    .pipe(sourcemaps.write(configBrowserify.mapDir))
+    .pipe(gulp.dest(configBrowserify.outputDir));
+};
 
 gulp.task('default', function(){
   console.log('default taks');
 });
 
+gulp.task('css', function () {
+  return gulp.src([files.normalize, files.css])
+    .pipe(concat('style.css'))
+    .pipe(gulp.dest(pathsCss.dev))
+    .pipe(minify())
+    .pipe(rename('style.min.css'))
+    .pipe(gulp.dest(pathsCss.dist))
+});
+
+gulp.task('css:watch', function () {
+  gulp.watch(pathsBase.css + '*.css', ['css']);
+});
+
 gulp.task('sass', function () {
   return gulp.src(files.sass)
     .pipe(sass.sync().on('error', sass.logError))
-    .pipe(rename('style.css'))
-    .pipe(gulp.dest('site/css/'))
-    .pipe(minify())
-    .pipe(rename('style.min.css'))
-    .pipe(gulp.dest('site/css/dist/'));
+    .pipe(rename('sass.css'))
+    .pipe(gulp.dest(pathsBase.css));
 });
 
 gulp.task('sass:watch', function () {
-  gulp.watch(cssPaths.sass + 'components/*.scss', ['sass']);
+  gulp.watch(pathsSass.components + '*.scss', ['sass']);
 });
 
-/*
-gulp.task('js', function () {
+gulp.task('sass:lint', function () {
+  return gulp.src(pathsSass.components + '*.scss')
+    .pipe(sassLint())
+    .pipe(sassLint.format())
+    .pipe(sassLint.failOnError());
+});
 
+gulp.task('js', function () {
+  var bundler = browserify(configBrowserify.config);
+
+  bundle(bundler);
 });
 
 gulp.task('js:watch', function () {
-
+  gulp.watch([pathsJs.modules + '*.js', files.js], ['js']);
 });
 
-gulp.task('watch', ['sass:watch', 'js:watch']);
-*/
+gulp.task('watch', ['sass:watch', 'css:watch', 'js:watch']);

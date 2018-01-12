@@ -1,21 +1,17 @@
-@charset "UTF-8";
+@charset 'UTF-8';
 
 
 // Functions
 // ==========================================================================
-@import "components/functions";
+@import 'components/functions';
 
 // Mixins
 // ==========================================================================
-@import "components/mixins";
+@import 'components/mixins';
 
 // Variables
 // ==========================================================================
-@import "components/variables";
-
-// Reset
-// ==========================================================================
-@import "components/normalize";
+@import 'components/variables';
 
 // SMACSS
 // ==========================================================================
@@ -23,27 +19,27 @@
 // base.scss
 // Base are the defaults
 // ==========================================================================
-@import "components/base";
+@import 'components/base';
 
 // layout.scss
 // Layout divide the page into sections
 // ==========================================================================
-@import "components/layout";
+@import 'components/layout';
 
 // module.scss
 // Modules are the reusable, modular parts of our design
 // ==========================================================================
-@import "components/module";
+@import 'components/module';
 
 // state.scss
 // State are ways to describe how our modules or layouts will look when in a particular state
 // ==========================================================================
-@import "components/state";
+@import 'components/state';
 
-// "theme.scss
+// 'theme.scss
 // ==========================================================================
-@import "components/theme";
+@import 'components/theme';
 
 // utils.scss
 // ==========================================================================
-@import "components/utils";
+@import 'components/utils';

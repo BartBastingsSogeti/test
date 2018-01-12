@@ -43,19 +43,19 @@ $breakpoint-min-lg: calc-rem($base-lg, $base-value);
 $breakpoint-max-lg: calc-rem(($base-lg - 1), $base-value);
 
 // breakpoint media mobile-first
-$breakpoint-xs-up: "only screen and (min-width: #{$breakpoint-min-xs})";
-$breakpoint-sm-up: "only screen and (min-width: #{$breakpoint-min-sm})";
-$breakpoint-md-up: "only screen and (min-width: #{$breakpoint-min-md})";
-$breakpoint-lg-up: "only screen and (min-width: #{$breakpoint-min-lg})";
+$breakpoint-xs-up: 'only screen and (min-width: #{$breakpoint-min-xs})';
+$breakpoint-sm-up: 'only screen and (min-width: #{$breakpoint-min-sm})';
+$breakpoint-md-up: 'only screen and (min-width: #{$breakpoint-min-md})';
+$breakpoint-lg-up: 'only screen and (min-width: #{$breakpoint-min-lg})';
 
 // breakpoint
-$breakpoint-xs-down: "only screen and (max-width: #{$breakpoint-max-xs})";
-$breakpoint-sm-down: "only screen and (max-width: #{$breakpoint-max-sm})";
-$breakpoint-md-down: "only screen and (max-width: #{$breakpoint-max-md})";
-$breakpoint-lg-down: "only screen and (max-width: #{$breakpoint-max-lg})";
+$breakpoint-xs-down: 'only screen and (max-width: #{$breakpoint-max-xs})';
+$breakpoint-sm-down: 'only screen and (max-width: #{$breakpoint-max-sm})';
+$breakpoint-md-down: 'only screen and (max-width: #{$breakpoint-max-md})';
+$breakpoint-lg-down: 'only screen and (max-width: #{$breakpoint-max-lg})';
 
 // breakpoint
-$breakpoint-xs-only: "#{$breakpoint-xs-up} and (max-width: #{$breakpoint-max-sm})";
-$breakpoint-sm-only: "#{$breakpoint-sm-up} and (max-width: #{$breakpoint-max-md})";
-$breakpoint-md-only: "#{$breakpoint-md-up} and (max-width: #{$breakpoint-max-lg})";
+$breakpoint-xs-only: '#{$breakpoint-xs-up} and (max-width: #{$breakpoint-max-sm})';
+$breakpoint-sm-only: '#{$breakpoint-sm-up} and (max-width: #{$breakpoint-max-md})';
+$breakpoint-md-only: '#{$breakpoint-md-up} and (max-width: #{$breakpoint-max-lg})';
 $breakpoint-lg-only: $breakpoint-lg-up;

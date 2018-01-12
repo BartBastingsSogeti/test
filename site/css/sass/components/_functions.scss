@@ -14,6 +14,6 @@
 ///    font-size: calc-rem(24, 16);
 ///  }
 @function calc-rem($size, $base) {
-  $remSize: $size / $base;
-  @return #{$remSize}rem;
+  $rem-size: $size / $base;
+  @return #{$rem-size}rem;
 }
