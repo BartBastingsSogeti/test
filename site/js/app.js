@@ -1,9 +1,28 @@
-var myModule = require('./modules/myModule');
+var DOMTraversing = require('./modules/DOMTraversing');
 
-var myModuleInstance = new myModule();
+var traversingInstance = new DOMTraversing();
 
-console.log(myModuleInstance.hello());
+Element.prototype.getSiblings = function (selector) {
+  return traversingInstance.getSiblings(this, selector);
+};
 
-console.log(myModuleInstance.goodbye());
+Element.prototype.getNextSiblings = function (selector) {
+  return traversingInstance.getNextSiblings(this, selector);
+};
 
-console.log(myModuleInstance.test());
+Element.prototype.getPreviousSiblings = function (selector) {
+  return traversingInstance.getPreviousSiblings(this, selector);
+};
+
+Element.prototype.closest = function (selector) {
+  return traversingInstance.closest(this, selector);
+};
+
+Element.prototype.getChildren = function (selector) {
+  return traversingInstance.getChildren(this, selector);
+};
+
+var element = document.getElementsByClassName('page-wrapper')[0];
+var siblings = element.getChildren();
+
+console.log(siblings);
