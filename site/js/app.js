@@ -1,6 +1,7 @@
 var DOMTraversing = require('./modules/DOMTraversing');
 
 var traversingInstance = new DOMTraversing();
+var manipulationInstance = new DOMTraversing();
 
 Element.prototype.getSiblings = function (selector) {
   return traversingInstance.getSiblings(this, selector);
