@@ -1,5 +1,5 @@
 /*
- * DOM Traversing
+ * DOMTraversing
  * Functions for walking the DOM tree and filtering elements.
  */
 function DOMTraversing() {
@@ -101,9 +101,7 @@ function DOMTraversing() {
 
     while (!!(el = el.nextElementSibling)) {
       if (cache !== el) {
-        if (selectorArr.length === 0) {
-          returnArr.push(el);
-        } else if (el.filter(selectorArr)) {
+        if (selectorArr.length === 0 || el.filter(selectorArr)) {
           returnArr.push(el);
         }
       }
@@ -129,9 +127,7 @@ function DOMTraversing() {
 
     while (!!(el = el.previousElementSibling)) {
       if (cache !== el) {
-        if (selectorArr.length === 0) {
-          returnArr.push(el);
-        } else if (el.filter(selectorArr)) {
+        if (selectorArr.length === 0 || el.filter(selectorArr)) {
           returnArr.push(el);
         }
       }
@@ -172,7 +168,7 @@ function DOMTraversing() {
    * @return {array} siblings
    */
   this.getSiblings = function (element, selector) {
-    return loopSelector(element, element.parentElement.firstElementChild, element.parentElement.querySelectorAll(selector), 'next');
+    return loopSelector(element, element.parentNode.firstChild, element.parentElement.querySelectorAll(selector), 'next');
   };
 
   /**
@@ -211,7 +207,7 @@ function DOMTraversing() {
    * @return {Array} children
    */
   this.getChildren = function (element, selector) {
-    return loopSelector(element, element.firstElementChild, element.querySelectorAll(selector), 'next');
+    return loopSelector(element, element.firstChild, element.querySelectorAll(selector), 'next');
   };
 
   /**
