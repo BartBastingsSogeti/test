@@ -5,27 +5,8 @@
 function DOMTraversing() {
   'use strict';
 
-  /**
-   * filter
-   * This function, create the filter and return true or false.
-   *
-   * @param {array} selectorArr
-   *
-   * @return {boolean}
-   */
-  Element.prototype.filter = function (selectorArr) {
-
-    var i,
-      el = this,
-      length = selectorArr.length;
-
-    for (i = 0; i < length; i++) {
-      if (selectorArr[i] === el) {
-        return true;
-      }
-    }
-    return false;
-  };
+  var baseFunctions = require('./baseFunctions'),
+    base = new baseFunctions();
 
   /**
    * matchesSelectorPolyfill
@@ -36,7 +17,7 @@ function DOMTraversing() {
    *
    * @return {boolean}
    */
-  Element.prototype.matchesSelectorPolyfill = function (selector) {
+  Element.prototype.matchesPolyfill = function (selector) {
 
     var el = this,
       matches = (el.document || el.ownerDocument).querySelectorAll(selector),
@@ -64,7 +45,7 @@ function DOMTraversing() {
         Element.prototype.msMatchesSelector ||
         Element.prototype.oMatchesSelector ||
         Element.prototype.webkitMatchesSelector ||
-        Element.prototype.matchesSelectorPolyfill(selector);
+        Element.prototype.matchesPolyfill(selector);
     }
 
     var el = this;
@@ -101,7 +82,7 @@ function DOMTraversing() {
 
     while (!!(el = el.nextElementSibling)) {
       if (cache !== el) {
-        if (selectorArr.length === 0 || el.filter(selectorArr)) {
+        if (selectorArr.length === 0 || base.filter(el, selectorArr)) {
           returnArr.push(el);
         }
       }
@@ -127,7 +108,7 @@ function DOMTraversing() {
 
     while (!!(el = el.previousElementSibling)) {
       if (cache !== el) {
-        if (selectorArr.length === 0 || el.filter(selectorArr)) {
+        if (selectorArr.length === 0 || base.filter(el, selectorArr)) {
           returnArr.push(el);
         }
       }
@@ -149,12 +130,16 @@ function DOMTraversing() {
    * @return {array} returnArr
    */
   function loopSelector (element, startElement, selector, direction) {
-    if (direction === 'next') {
-      return loopNext(element, startElement, selector);
-    } else if (direction === 'prev') {
-      return loopPrev(element, startElement, selector);
-    } else {
-      console.error('The param "direction" can only be a the string "next" or "prev"!', direction);
+    switch (direction) {
+      case 'next':
+        return loopNext(element, startElement, selector);
+        break;
+        case 'prev':
+        return loopPrev(element, startElement, selector);
+        break;
+      default:
+        console.error('The param "direction" can only be a the string "next" or "prev"!', direction);
+        break;
     }
   }
 
@@ -229,7 +214,7 @@ function DOMTraversing() {
         Element.prototype.msMatchesSelector ||
         Element.prototype.oMatchesSelector ||
         Element.prototype.webkitMatchesSelector ||
-        Element.prototype.matchesSelectorPolyfill(selector);
+        Element.prototype.matchesPolyfill(selector);
     }
 
     return element.matches(selector);

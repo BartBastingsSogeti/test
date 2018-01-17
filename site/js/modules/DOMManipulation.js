@@ -6,17 +6,24 @@
 function DOMManipulation() {
   'use strict';
 
-  var inhertianceInstance = require('./objectInhertiance');
+  var baseFunctionsModule = require('./baseFunctions'),
+    base = new baseFunctionsModule();
+
+  var objectToElementModule = require('./objectToElement'),
+    objectToElement = new objectToElementModule();
 
   /**
    * replaceElement
    * Remove an element from the DOM tree and insert a new one in its place.
    *
    * @param {element} element
-   * @param {element} replaceElement
+   * @param {element} newElement
    */
-  this.replaceElement = function (element, replaceElement) {
-    element.parentNode.replaceChild(replaceElement, element);
+  this.replaceElement = function (element, newElement) {
+
+    var parent = element.parentElement || element.parentNode;
+
+    parent.replaceChild(newElement, element);
   };
 
   /**
@@ -30,13 +37,26 @@ function DOMManipulation() {
   };
 
   /**
+   * removeElementFunction
+   * Remove an element from the DOM tree.
+   *
+   * @param {element} element
+   */
+  var removeElementFunction = function (element) {
+
+    var parent = element.parentElement || element.parentNode;
+
+    parent.removeChild(element);
+  };
+
+  /**
    * removeElement
    * Remove an element from the DOM tree.
    *
    * @param {element} element
    */
   this.removeElement = function (element) {
-    element.parentNode.removeChild(element);
+    removeElementFunction(element);
   };
 
   /**
@@ -46,10 +66,7 @@ function DOMManipulation() {
    * @param {object} elements
    */
   this.removeElements = function (elements) {
-
-    var inhertiance = new inhertianceInstance();
-
-    inhertiance.checkInhertiance(elements, this.removeElement);
+    objectToElement.checkObject(elements, removeElementFunction);
   };
 
   /**
@@ -61,8 +78,15 @@ function DOMManipulation() {
    *
    * @todo insert function to removeChild with selctor
    */
-  this.removeChildFromElement = function (element, selector) {
+  this.removeChildFromElement = function (element, removeElement) {
 
+    if (!removeElement) {
+      removeElement = element.firstChild;
+    }
+
+    console.log('removeElement', typeof removeElement);
+
+    //element.removeChild(removeElement);
   };
 
   /**
@@ -76,6 +100,20 @@ function DOMManipulation() {
    */
   this.removeChildsFromElement = function (element, selector) {
 
+/*
+    var returnArr = [],
+      cache = element,
+      el = startElement;
+
+    while (!!(el = el.nextElementSibling)) {
+      if (cache !== el) {
+        if (selectorArr.length === 0 || el.filter(selectorArr)) {
+          returnArr.push(el);
+        }
+      }
+    }
+    return returnArr;
+    */
   };
 
   /**

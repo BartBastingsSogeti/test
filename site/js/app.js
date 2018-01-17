@@ -1,62 +1,92 @@
 var DOMTraversing = require('./modules/DOMTraversing');
 var DOMManipulation = require('./modules/DOMManipulation');
 
-var traversingInstance = new DOMTraversing();
-var manipulationInstance = new DOMManipulation();
+var traversing = new DOMTraversing();
+var manipulation = new DOMManipulation();
 
-Element.prototype.getSiblings = function (selector) {
-  return traversingInstance.getSiblings(this, selector);
+/**
+* jsSiblings
+* Wrap a given element in a new container element
+*/
+if (!Element.prototype.jsSiblings) {
+  Element.prototype.jsSiblings = function (selector) {
+    return traversing.getSiblings(this, selector);
+  };
+}
+
+if (!Element.prototype.jsNextSiblings) {
+  Element.prototype.jsNextSiblings = function (selector) {
+    return traversing.getNextSiblings(this, selector);
+  };
+}
+
+if (!Element.prototype.jsNextSiblings) {
+  Element.prototype.jsPrevSiblings = function (selector) {
+    return traversing.getPreviousSiblings(this, selector);
+  };
+}
+if (!Element.prototype.jsClosest) {
+  Element.prototype.jsClosest = function (selector) {
+    return traversing.closest(this, selector);
+  };
+}
+
+if (!Element.prototype.jsChildren) {
+  Element.prototype.jsChildren = function (selector) {
+    return traversing.getChildren(this, selector);
+  };
+}
+
+if (!Element.prototype.jsMatches) {
+  Element.prototype.jsMatches = function (selector) {
+    return traversing.getMatches(this, selector);
+  };
+}
+
+if (!Element.prototype.jsClosest) {
+  Element.prototype.jsClosest = function (selector) {
+    return traversing.getClosest(this, selector);
+  };
+}
+
+if (!Element.prototype.jsReplaceWith) {
+  Element.prototype.jsReplaceWith = function (replaceElement) {
+    return manipulation.replaceElement(this, replaceElement);
+  };
+}
+
+if (!Element.prototype.jsEmpty) {
+  Element.prototype.jsEmpty = function (replaceElement) {
+    return manipulation.emptyElement(this);
+  };
+}
+
+if (!Element.prototype.jsRemove) {
+  Element.prototype.jsRemove = function () {
+    return manipulation.removeElement(this);
+  };
+}
+
+if (!Element.prototype.jsRemoveAll) {
+  Object.prototype.jsRemoveAll = function () {
+    return manipulation.removeElements(this);
+  };
+}
+
+var birds = document.getElementById('birds'),
+  childeren = birds.jsChildren('.endangered');
+
+console.log('children',  childeren);
+if (Element.prototype.remove) {
+  console.log('remove birds');
+  birds.remove();
+} else {
+  console.log('no support remove');
 };
+// NOTES
+// Dom events
+// prepend, append, before, after, replace, and remove
+// classList, matches
 
-Element.prototype.getNextSiblings = function (selector) {
-  return traversingInstance.getNextSiblings(this, selector);
-};
-
-Element.prototype.getPreviousSiblings = function (selector) {
-  return traversingInstance.getPreviousSiblings(this, selector);
-};
-
-Element.prototype.closest = function (selector) {
-  return traversingInstance.closest(this, selector);
-};
-
-Element.prototype.getChildren = function (selector) {
-  return traversingInstance.getChildren(this, selector);
-};
-
-Element.prototype.getMatches = function (selector) {
-  return traversingInstance.getMatches(this, selector);
-};
-
-Element.prototype.getClosest = function (selector) {
-  return traversingInstance.getClosest(this, selector);
-};
-
-Element.prototype.removeElement = function () {
-  return manipulationInstance.removeElement(this);
-};
-
-Object.prototype.removeElements = function () {
-  return manipulationInstance.removeElements(this);
-};
-
-var element = document.getElementsByClassName('page-main')[0];
-var endangered = document.getElementsByClassName('endangered')[0];
-var birds = document.getElementById('birds');
-
-//var siblings = element.getSiblings();
-//console.log('siblings', siblings);
-
-//var prevSiblings = element.getPreviousSiblings();
-//console.log('prevSiblings', prevSiblings);
-
-//var nextSiblings = element.getNextSiblings();
-//console.log('nextSiblings', nextSiblings);
-
-var children = birds.getChildren();
-console.log('getChildren', children);
-
-//var closest = endangered.getClosest('div');
-//console.log('closest', closest);
-
-birds.removeElements();
+// Array.prototype
+// indexOf, lastIndexOf, forEach, every, filter, some, map, reduce, reduceRight
